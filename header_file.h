@@ -9,6 +9,9 @@
 #include <netinet/in.h>
 #include <sys/types.h>
 #include <stdlib.h>
+#include <string.h>
+#include<arpa/inet.h>
+#include<stdbool.h>
 
-#define PORT 5050
+#define PORT 5055
 #endif
