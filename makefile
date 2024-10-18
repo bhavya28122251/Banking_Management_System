@@ -5,10 +5,10 @@ CC = gcc
 CFLAGS = -Wall -g
 
 # Source files
-SRCS = server.c admin.c
+SRCS = server.c 
 
 # Header files
-HDRS = admin.h
+HDRS =  header_file.h add.h login.h menu.h modify.h display.h
 
 # Output executable
 TARGET = server

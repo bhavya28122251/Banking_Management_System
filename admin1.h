@@ -7,6 +7,7 @@
 
 void admin_login(int cd);
 void admin_options(int cd);
+bool add_employee(int cd);
 /*struct User_Cred{
 	char admin_name[100];
 	char admin_pass[100];
