@@ -14,8 +14,15 @@
 #include<stdbool.h>
 #include<sys/file.h>
 
+
 bool admin_login(int cd);
+bool employee_login(int cd);
+//bool manager_login(int cd);
+//bool customer_login(int cd);
 bool admin_options(int cd);
+bool employee_options(int cd);
+bool manager_options(int cd);
+bool customer_options(int cd);
 bool add_employee(int cd);
 bool modify_employee(int cd);
 bool display_employee_data(int cd);

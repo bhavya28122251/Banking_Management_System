@@ -28,7 +28,7 @@ bool modify_employee(int cd) {
    	lock.l_type = F_WRLCK;  
     	lock.l_whence = SEEK_SET;  
 
-	off_t record_offset = 0;
+	//off_t record_offset = 0;
    	off_t current_position = 0;
 
    	 char buffer;

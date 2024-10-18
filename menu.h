@@ -75,3 +75,6 @@ bool admin_options(int cd){
 
 }
 
+bool employee_options(int cd){
+	return true;
+}

@@ -99,6 +99,7 @@ void handle_client(int cd){
 			
     	}
 	 else if (strstr(ch_str, "2") !=NULL) {
+		printf("Employee");
         	employee_login(cd);
     	} 
 	/*else if (strstr(ch_str, "3") !=NULL) {
