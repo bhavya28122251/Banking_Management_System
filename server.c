@@ -8,6 +8,9 @@
 
 void handle_client(int cd);
 bool admin_login(int cd);
+bool employee_login(int cd);
+//bool customer_login(int cd);
+//bool manager_login(int cd);
 
 int main(){
         struct sockaddr_in server_addr,client_addr;
@@ -91,23 +94,23 @@ void handle_client(int cd){
 
 
 	if (strstr(ch_str, "4") !=NULL) {
-        	//printf("Admin in server");
 		admin_login(cd);
 		
 			
     	}
-	/* else if (strstr(ch_str, "2") !=NULL) {
-        	write(cd, "employee_login(int cd)\n", 23);
+	 else if (strstr(ch_str, "2") !=NULL) {
+        	employee_login(cd);
     	} 
-	else if (strstr(ch_str, "3") !=NULL) {
-        	write(cd, "manager_login(int cd)\n", 22);
+	/*else if (strstr(ch_str, "3") !=NULL) {
+        	manager_login(cd);
     	} 
-	else if (strstr(ch_str, "4") !=NULL) {
-        	write(cd, "admin_login(int cd)\n", 20);
+	else if (strstr(ch_str, "1") !=NULL) {
+        	customer_login(cd);
     	} 
 	else {
         	write(cd, "Choose a number from 1 to 4\n", 27);
     }*/
+
 	}
 }
 

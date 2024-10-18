@@ -17,10 +17,11 @@
 bool admin_login(int cd);
 bool admin_options(int cd);
 bool add_employee(int cd);
-//bool modify_employee(int cd);
+bool modify_employee(int cd);
 bool display_employee_data(int cd);
 bool change_admin_pass(int cd);
-int my_strcmp(const char *s1, const char *s2);
+bool manage_user_roles(int cd);
+//int my_strcmp(const char *s1, const char *s2);
 struct Employee{
 	char name[100];
 	char pass[100];

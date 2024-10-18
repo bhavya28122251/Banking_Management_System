@@ -39,29 +39,6 @@ bool admin_login(int cd){
         else    
                 admin_pass[data_read2]='\0';
 
-       /* if((strcmp(admin_name,Admin_Cred.admin_name)==0) && (strcmp(admin_pass,Admin_Cred.admin_pass)==0)){
-                const char* success="Login Successful\n";
-                write(cd,success,strlen(success));
-                admin_options(cd);
-        }
-        else{
-                const char* fail="Login Failure\n";
-                write(cd,fail,strlen(fail));
-                printf("Fail");
-                close(cd);
-
-
-        }*/
-
-	/*FILE *file = fopen("admin_login.txt", "l");
-	if (file == NULL) {
-		perror("Error in opening the file");
-		exit(EXIT_FAILURE);
-	}
-
-    	fprintf(file, "%s %s\n", admin_name, admin_pass);
-    	fclose(file);
-	*/
 	 FILE *file = fopen("admin_login.txt", "r");
 	 if (file == NULL) {
         	perror("Error in opening file");
@@ -114,4 +91,8 @@ bool change_admin_pass(int cd){
 	return true;
 }	
 
-
+bool employee_login(int cd){
+	
+	
+return true;
+}

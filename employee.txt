@@ -1,4 +1,3 @@
-E1001,Bhavya,Bha,1
-E1002,Dhwani,Dhw,1
-E1004,Ramesh,Ram,1
-E1023,Kokesh,E1023,1
+E1011,Kavyaa,Bha,1
+E1007,Mansi,Sat,0
+E1012,Kanya,tan,1

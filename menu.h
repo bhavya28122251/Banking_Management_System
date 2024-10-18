@@ -39,7 +39,7 @@ bool admin_options(int cd){
                                 break;
 
 			case 4:
-                                if(1){
+                                if(modify_employee(cd)){
                                         write(cd,"Employee Details Modified\n",strlen("Employee Details Modified\n"));
                                 }
                                 break;
@@ -50,7 +50,7 @@ bool admin_options(int cd){
                                 break;
 
 			case 6:
-                                if(1){
+                                if(manage_user_roles(cd)){
                                         write(cd,"User Roles Managed\n",strlen("User Roles Managed\n"));
                                 }
                                 break;
