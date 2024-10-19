@@ -91,11 +91,13 @@ bool change_admin_pass(int cd){
 	return true;
 }	
 
-bool employee_login(int cd){
-	char empl_id[100];
-        char empl_pass[100];
+
+bool employee_login(int cd) {
 	
-	const char* prompt1="-----Employee Login-----\nEmployee ID:";
+	 char empl_id[100];
+        char empl_pass[100];
+
+        const char* prompt1="-----Employee Login-----\nEmployee ID:";
         if(( write(cd,prompt1,strlen(prompt1)))==-1){
                 perror("Error");
         }
@@ -129,18 +131,24 @@ bool employee_login(int cd){
         else    
                 empl_pass[data_read2]='\0';
 
-	 int db_fd = open("employee.txt", O_RDWR);
+        int db_fd = open("employee.txt", O_RDWR);
         if (db_fd == -1) {
                 perror("Error in opening the database file");
                 return false;
         }
 
-	printf("Input:%s %s ",empl_id,empl_pass);
-	char line[300];
+        char line[300];
         struct Employee temp;
 
+        struct flock lock;
+        memset(&lock, 0, sizeof(lock));
+        lock.l_type = F_WRLCK;  
+        lock.l_whence = SEEK_SET;  
 
-        char buffer;
+        //off_t record_offset = 0;
+        off_t current_position = 0;
+
+         char buffer;
         int line_index = 0;
 
         while (read(db_fd, &buffer, 1) > 0) {
@@ -151,19 +159,43 @@ bool employee_login(int cd){
                 line[line_index] = '\0';
                 line_index = 0;
 
-                sscanf(line, "%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass, &temp.is_empl);
+                current_position = lseek(db_fd, 0, SEEK_CUR);
+
+                int is_empl_int;
+                sscanf(line, "%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass, &is_empl_int);
+                temp.is_empl = (is_empl_int != 0); 
                 printf("Read Employee: ID=%s, Name=%s, Password=%s, Is Employed=%d\n", temp.id, temp.name, temp.pass, temp.is_empl);
+
+                if (strcmp(temp.id, empl_id) == 0) {
+                        printf("Employee ID matched.\n");
+
+                lock.l_start = current_position - strlen(line) - 1;  
+                lock.l_len = strlen(line) + 1; 
+
+                if (fcntl(db_fd, F_SETLK, &lock) == -1) {
+                         perror("Error in obtaining lock");
+                        close(db_fd);
+                        return false;
+                }
 		
-		printf("%s %s %s %s",temp.id,empl_id,temp.pass,empl_pass);
-                if (strcmp(temp.id, empl_id) == 0 && strcmp(temp.pass,empl_pass)==0) {
-                        printf("Employee ID and password matched.\n");
-			write(cd,"Login Successfull",strlen("Login Successfull"));
-			employee_options(cd);
-			return true;
-                	break;
-            	}
+		write(cd,"Login Successfull",strlen("Login Successfull"));
+		employee_options(cd);		
+
+                lock.l_type = F_UNLCK;
+                if (fcntl(db_fd, F_SETLKW, &lock) == -1) {
+                        perror("Error in releasing the lock");
+                        close(db_fd);
+                        return false;
+                }
+
+                return true;
+                break;
+		
+            }
         }}
 	write(cd,"Login Failure",strlen("Login Failure"));
 	return false;
- }
+    
+}
+
 

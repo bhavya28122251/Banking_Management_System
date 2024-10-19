@@ -17,13 +17,15 @@
 
 bool admin_login(int cd);
 bool employee_login(int cd);
-//bool manager_login(int cd);
-//bool customer_login(int cd);
+bool manager_login(int cd);
+bool customer_login(int cd);
 bool admin_options(int cd);
 bool employee_options(int cd);
 bool manager_options(int cd);
 bool customer_options(int cd);
 bool add_employee(int cd);
+bool add_customer(int cd);
+bool add_manager(int cd);
 bool modify_employee(int cd);
 bool display_employee_data(int cd);
 bool change_admin_pass(int cd);

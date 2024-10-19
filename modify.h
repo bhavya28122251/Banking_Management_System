@@ -44,7 +44,9 @@ bool modify_employee(int cd) {
 
             	current_position = lseek(db_fd, 0, SEEK_CUR);
 
-	        sscanf(line, "%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass, &temp.is_empl);
+		int is_empl_int;
+	        sscanf(line, "%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass, &is_empl_int);
+		temp.is_empl = (is_empl_int != 0); 
         	printf("Read Employee: ID=%s, Name=%s, Password=%s, Is Employed=%d\n", temp.id, temp.name, temp.pass, temp.is_empl);
 
             	if (strcmp(temp.id, empid) == 0) {
@@ -156,7 +158,9 @@ bool manage_user_roles(int cd){
 
                 current_position = lseek(db_fd, 0, SEEK_CUR);
 
-                sscanf(line, "%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass, &temp.is_empl);
+		int is_empl_int;
+                sscanf(line, "%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass, &is_empl_int);
+		temp.is_empl = (is_empl_int != 0); 
                 printf("Read Employee: ID=%s, Name=%s, Password=%s, Is Employed=%d\n", temp.id, temp.name, temp.pass, temp.is_empl);
 
                 if (strcmp(temp.id, empid) == 0) {
