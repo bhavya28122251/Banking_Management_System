@@ -19,14 +19,19 @@ bool admin_login(int cd);
 bool employee_login(int cd);
 bool manager_login(int cd);
 bool customer_login(int cd);
+
 bool admin_options(int cd);
 bool employee_options(int cd);
 bool manager_options(int cd);
 bool customer_options(int cd);
+
 bool add_employee(int cd);
 bool add_customer(int cd);
 bool add_manager(int cd);
+
 bool modify_employee(int cd);
+bool modify_customer(int cd);
+
 bool display_employee_data(int cd);
 bool change_admin_pass(int cd);
 bool manage_user_roles(int cd);
@@ -37,6 +42,32 @@ struct Employee{
 	char id[10];
 	bool is_empl;
 };
+
+struct Customer{
+	char id[10];
+	char name[100];
+	char pass[100];
+	bool active;
+	char balance[10];
+};
+
+struct Transaction{
+	char sender_id[10];
+	char receiver_id[10];
+	char money_sent[10];
+};
+
+struct Loan{
+	char cust_id[10];
+	char empl_id[10];
+	int status;
+};
+
+struct Feedback{
+	char cust_id[10];
+	char feedback[1000];
+};
+
 
 #define PORT 5055
 #endif

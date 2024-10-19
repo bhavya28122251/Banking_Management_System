@@ -28,7 +28,7 @@ bool admin_options(int cd){
         			}
 				break;
 			case 2:
-				if(1){
+				if(modify_customer(cd)){
 					write(cd,"Customer Details Modified\n",strlen("Customer Details Modified\n"));
 				}
 				break;
@@ -97,12 +97,12 @@ bool employee_options(int cd){
                 int ch=atoi(ch_str);
                 switch(ch){
                         case 1:
-                                if(add_new_customer(cd)){
+                                if(add_customer(cd)){
                                         write(cd,"New Customer added Successfully\n",strlen("New Customer added Successfully\n"));
                                 }
                                 break;
                         case 2:
-                                if(1){
+                                if(modify_customer(cd)){
                                         write(cd,"Customer Details Modified\n",strlen("Customer Details Modified\n"));
                                 }
                                 break;
