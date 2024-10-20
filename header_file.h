@@ -45,6 +45,13 @@ bool apply_loan(int cd);
 bool assign_loan(int cd);
 bool view_assigned_loan_appl(int cd);
 bool approve_reject_loan(int cd);
+bool deposit_money(int cd);
+bool withdraw_money(int cd);
+bool transfer_funds(int cd);
+bool add_feedback(int cd);
+bool review_feedback(int cd);
+bool view_transaction_history(int cd);
+//bool activate_deactivate_customer(int cd);
 
 //int my_strcmp(const char *s1, const char *s2);
 struct Employee{
@@ -64,8 +71,9 @@ struct Customer{
 
 struct Transaction{
 	char sender_id[10];
-	char receiver_id[10];
-	char money_sent[10];
+	char rec_id[10];
+	char sent[10];
+	char flag;
 };
 
 struct Loan{

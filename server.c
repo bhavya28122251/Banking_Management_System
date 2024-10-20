@@ -4,9 +4,10 @@
 #include "login.h"
 #include "menu.h"
 #include "modify.h"
-#include "display.h"
+//#include "display.h"
 #include "loan.h"
-//#include "transaction.h"
+#include "transaction.h"
+#include "feedback.h"
 
 void handle_client(int cd);
 bool admin_login(int cd);

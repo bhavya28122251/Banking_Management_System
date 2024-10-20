@@ -5,7 +5,7 @@ bool admin_options(int cd){
 	ssize_t bytes_read;
 
 	while(1){
-		char admin_menu[]="\nChoose from the given options:\n1.Add New Bank Emplyee\n2.Modify Customer Details\n3.Display Customer Deatils\n4.Modify Employee Details\n5.Display Employee Details\n6.Manage User Roles\n7.Change Password\n8.Logout\n9.Exit";
+		char admin_menu[]="\nChoose from the given options:\n1.Add New Bank Emplyee\n2.Modify Customer Details\n3.Modify Employee Details\n4.Manage User Roles\n5.Change Password\n6.Logout\n7.Exit";
 		write(cd,admin_menu,sizeof(admin_menu));
 		
 		char ch_str[20];
@@ -32,38 +32,27 @@ bool admin_options(int cd){
 					write(cd,"Customer Details Modified\n",strlen("Customer Details Modified\n"));
 				}
 				break;
-			 case 3:
-                                if(1){
-                                        write(cd,"Customer Datails displayed Successfully\n",strlen("Customer Datails displayed Successfully\n"));
-                                }
-                                break;
 
-			case 4:
+			case 3:
                                 if(modify_employee(cd)){
                                         write(cd,"Employee Details Modified\n",strlen("Employee Details Modified\n"));
                                 }
                                 break;
-			 case 5:
-                                if(display_employee_data(cd)){
-                                        write(cd,"Employee Details displayed Successfully\n",strlen("Employee Details displayed Successfully\n"));
-                                }
-                                break;
-
-			case 6:
+			case 4:
                                 if(manage_user_roles(cd)){
                                         write(cd,"User Roles Managed\n",strlen("User Roles Managed\n"));
                                 }
                                 break;
-			case 7:
+			case 5:
                                 if(change_admin_pass(cd)){
                                         write(cd,"Password has Changed\n",strlen("Password has Changed\n"));
                                 }
                                 break;
-			case 8:
+			case 6:
                                 write(cd,"Logged Out\n",strlen("Logged Out\n"));
                                 return true;
                                 break;
-			case 9:
+			case 7:
                                 write(cd,"Exit",strlen("Exit"));
                                	close(cd);
                                 break;
@@ -161,23 +150,23 @@ bool customer_options(int cd){
                 int ch=atoi(ch_str);
                 switch(ch){
                         case 1:
-                                if(1){
+                                if(view_balace(cd)){
                                         write(cd,"Account Balance Displayed Successfully\n",strlen("Account Balance Displayed Successfully\n"));
                                 }
                                 break;
                         case 2:
-                                if(1){
+                                if(deposit_money(cd)){
                                         write(cd,"Money Deposited Successfully\n",strlen("Money Deposited Successfully\n"));
                                 }
                                 break;
                          case 3:
-                                if(1){
+                                if(withdraw_money(cd)){
                                         write(cd,"Money Withdrawn Successfully\n",strlen("Money Withdrawn Successfully\n"));
                                 }
                                 break;
 
                         case 4:
-                                if(1){
+                                if(transfer_funds(cd)){
                                         write(cd,"Funds Transferred Successfully\n",strlen("Funds Transferred Successfully\n"));
                                 }
                                 break;
@@ -188,19 +177,19 @@ bool customer_options(int cd){
                                 break;
 			
 			 case 6:
-                                if(1){
+                                if(change_customer_pass(cd)){
                                         write(cd,"Password has Changed\n",strlen("Password has Changed\n"));
                                 }
                                 break;
 
 			case 7:
-                                if(1){
+                                if(add_feedback(cd)){
                                         write(cd,"Feedback Submitted\n",strlen("Feedback Submitted\n"));
                                 }
                                 break;
 
 			case 8:
-                                if(1){
+                                if(view_transaction_history(cd)){
                                         write(cd,"Transaction History Displayed Successfully\n",strlen("Transaction History Displayed Successfully\n"));
                                 }
                                 break;
@@ -254,13 +243,13 @@ bool manager_options(int cd){
                                 }
                                 break;
                          case 3:
-                                if(1){
+                                if(review_feedback(cd)){
                                         write(cd,"Customer Feedback Reviewed Successfully\n",strlen("Customer Feedback Reviewed Successfully\n"));
                                 }
                                 break;
 
                         case 4:
-                                if(1){
+                                if(change_employee_pass(cd)){
                                         write(cd,"Password has Changed\n",strlen("Password has Changed\n"));
                                 }
                                 break;

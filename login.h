@@ -432,6 +432,131 @@ bool customer_login(int cd){
 
 }
 
+bool change_customer_pass(int cd){
+   	char format[300];
+        char cust_id[100];
+        char cust_pass[100];
+        struct Customer data_new;
+        const char* prompt1="-----Change Password-----\nCustomer ID:";
+        if(( write(cd,prompt1,strlen(prompt1)))==-1){
+                perror("Error");
+        }
+
+        ssize_t data_read = read(cd,cust_id,sizeof(cust_id));
+
+        if (data_read <= 0)
+        {
+                close(cd);
+                exit(1);
+        }
+
+        if(cust_id[data_read-1]=='\n')
+                cust_id[data_read-1]='\0';
+        else    
+                cust_id[data_read]='\0';
+
+        const char * prompt2="Enter Existing Password:";
+        write(cd,prompt2,strlen(prompt2));
+
+        ssize_t data_read2 = read(cd,cust_pass,sizeof(cust_pass));
+
+        if (data_read2 <= 0)
+        {
+                close(cd);
+                exit(1);
+        }
+
+        if(cust_pass[data_read2-1]=='\n')
+                cust_pass[data_read2-1]='\0';
+        else    
+                cust_pass[data_read2]='\0';
+
+        int db_fd = open("customer_db.txt", O_RDWR);
+        if (db_fd == -1) {
+                perror("Error in opening the database file");
+                return false;
+        }
+
+        char line[300];
+        struct Customer temp;
+
+        struct flock lock;
+        memset(&lock, 0, sizeof(lock));
+        lock.l_type = F_WRLCK;  
+        lock.l_whence = SEEK_SET;  
+
+        //off_t record_offset = 0;
+        off_t current_position = 0;
+
+         char buffer;
+        int line_index = 0;
+
+        while (read(db_fd, &buffer, 1) > 0) {
+        if (buffer != '\n') {
+            line[line_index++] = buffer;
+        }
+         else {
+                line[line_index] = '\0';
+                line_index = 0;
+
+                current_position = lseek(db_fd, 0, SEEK_CUR);
+
+                int active_int;
+                sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass,temp.balance, &active_int);
+                temp.active = (active_int != 0); 
+
+                if (strcmp(temp.id, cust_id) == 0 && strcmp(temp.pass,cust_pass)==0) {
+
+                lock.l_start = current_position - strlen(line) - 1;  
+                lock.l_len = strlen(line) + 1; 
+
+                if (fcntl(db_fd, F_SETLK, &lock) == -1) {
+                         perror("Error in obtaining lock");
+                        close(db_fd);
+                        return false;
+                }
+
+                write(cd, "New Password:", strlen("New Password:"));
+                ssize_t data_read = read(cd,data_new.pass,sizeof(data_new.pass));
+
+                if (data_read <= 0)
+                {
+                        close(cd);
+                        exit(1);
+                }
+
+                if(data_new.id[data_read-1]=='\n')
+                        data_new.pass[data_read-1]='\0';
+                else    
+                        data_new.pass[data_read]='\0';
+
+
+                snprintf(format, sizeof(format), "%s,%s,%s,%s,%d\n", temp.id, temp.name, data_new.pass, temp.balance,temp.acitve);
+
+                lseek(db_fd, current_position - strlen(line) - 1, SEEK_SET);
+
+                if (write(db_fd, format, strlen(format)) == -1) {
+                        write(cd, "Error in Updating Data", strlen("Error in Updating Data"));
+                        close(db_fd);
+                        return false;
+                }
+
+                lock.l_type = F_UNLCK;
+                if (fcntl(db_fd, F_SETLKW, &lock) == -1) {
+                        perror("Error in releasing the lock");
+                        close(db_fd);
+                        return false;
+                }
+
+                return true;
+                break;
+
+            }
+        }}
+        write(cd,"Pasword Not Changed",strlen("Pasword Not Changed"));
+        return false;
+}
+
 bool manager_login(int cd) {
 
         char man_id[100];

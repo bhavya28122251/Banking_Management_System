@@ -8,7 +8,7 @@ CFLAGS = -Wall -g
 SRCS = server.c 
 
 # Header files
-HDRS =  header_file.h add.h login.h menu.h modify.h display.h transaction.h loan.h
+HDRS =  header_file.h add.h login.h menu.h modify.h display.h transaction.h loan.h feedback.h
 
 # Output executable
 TARGET = server
