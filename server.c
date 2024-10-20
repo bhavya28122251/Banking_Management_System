@@ -5,6 +5,8 @@
 #include "menu.h"
 #include "modify.h"
 #include "display.h"
+#include "loan.h"
+//#include "transaction.h"
 
 void handle_client(int cd);
 bool admin_login(int cd);
@@ -102,7 +104,7 @@ void handle_client(int cd){
 		printf("Employee");
         	employee_login(cd);
     	} 
-	/*else if (strstr(ch_str, "3") !=NULL) {
+	else if (strstr(ch_str, "3") !=NULL) {
         	manager_login(cd);
     	} 
 	else if (strstr(ch_str, "1") !=NULL) {
@@ -110,7 +112,7 @@ void handle_client(int cd){
     	} 
 	else {
         	write(cd, "Choose a number from 1 to 4\n", 27);
-    }*/
+    }
 
 	}
 }

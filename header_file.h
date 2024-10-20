@@ -34,7 +34,16 @@ bool modify_customer(int cd);
 
 bool display_employee_data(int cd);
 bool change_admin_pass(int cd);
+bool change_employee_pass(int cd);
+bool change_customer_pass(int cd);
+bool change_manager_pass(int cd);
 bool manage_user_roles(int cd);
+
+bool view_balance(int cd);
+
+bool apply_loan(int cd);
+bool assign_loan(int cd);
+bool view_assigned_loan_appl(int cd);
 //int my_strcmp(const char *s1, const char *s2);
 struct Employee{
 	char name[100];

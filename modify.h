@@ -28,7 +28,7 @@ bool modify_employee(int cd) {
    	lock.l_type = F_WRLCK;  
     	lock.l_whence = SEEK_SET;  
 
-	//off_t record_offset = 0;
+	off_t record_offset = 0;
    	off_t current_position = 0;
 
    	 char buffer;
@@ -166,7 +166,7 @@ bool manage_user_roles(int cd){
                         printf("Employee ID matched.\n");
 
                 lock.l_start = current_position - strlen(line) - 1;  
-                lock.l_len = strlen(line) + 1; 
+                lock.l_len = strlen(line); 
 
                 if (fcntl(db_fd, F_SETLKW, &lock) == -1) {
                          perror("Error in obtaining lock");
@@ -274,7 +274,19 @@ bool modify_customer(int cd){
                 }
 
                 write(cd, "Enter New Data\nName:", strlen("Enter New Data\nName:"));
-                read(cd, data_new.name, sizeof(data_new.name));
+                ssize_t data_read1=read(cd, data_new.name, sizeof(data_new.name));
+		if (data_read1 <= 0)
+                {
+                        close(cd);
+                        exit(1);
+                }
+
+                if(data_new.name[data_read1-1]=='\n')
+                        data_new.name[data_read1-1]='\0';
+                else    
+                        data_new.name[data_read1]='\0';
+
+		
 
                  write(cd, "ID:", strlen("ID:"));
                 ssize_t data_read = read(cd,data_new.id,sizeof(data_new.id));
