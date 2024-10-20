@@ -79,7 +79,7 @@ bool employee_options(int cd){
 	  ssize_t bytes_read;
 
         while(1){
-                char menu[]="\nChoose from the given options:\n1.Add New Customer\n2.Modify Customer Details\n3.Process Loan Applications\n4.Approve/Reject Loans\n5.View Assigned Loan Apllications\n6.View Customer Transactions\n7.Change Password\n8.Logout\n9.Exit";
+                char menu[]="\nChoose from the given options:\n1.Add New Customer\n2.Modify Customer Details\n3.Process Loan Applications\n4.View Assigned Loan Apllications\n5.Change Password\n6.Logout\n7.Exit";
                 write(cd,menu,sizeof(menu));
 
                 char ch_str[20];
@@ -108,7 +108,7 @@ bool employee_options(int cd){
                                 break;
 
                         case 3:
-                                if(1){
+                                if(approve_reject_loan(cd)){
                                         write(cd,"Loan Approved/Rejected Successfully\n",strlen("Loan Approved/Rejected Successfully\n"));
                                 }
                                 break;
@@ -119,20 +119,15 @@ bool employee_options(int cd){
                                 break;
 
                         case 5:
-                                if(1){
-                                        write(cd,"Customer Transactions Displayed Successfully\n",strlen("Customer Transactions Displayed Successfully\n"));
-                                }
-                                break;
-                        case 6:
                                 if(change_employee_pass(cd)){
                                         write(cd,"Password has Changed\n",strlen("Password has Changed\n"));
                                 }
                                 break;
-                        case 7:
+                        case 6:
                                 write(cd,"Logged Out\n",strlen("Logged Out\n"));
                                 return true;
                                 break;
-                        case 8:
+                        case 7:
                                 write(cd,"Exit",strlen("Exit"));
                                 close(cd);
                                 break;

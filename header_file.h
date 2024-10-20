@@ -44,6 +44,8 @@ bool view_balance(int cd);
 bool apply_loan(int cd);
 bool assign_loan(int cd);
 bool view_assigned_loan_appl(int cd);
+bool approve_reject_loan(int cd);
+
 //int my_strcmp(const char *s1, const char *s2);
 struct Employee{
 	char name[100];
