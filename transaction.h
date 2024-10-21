@@ -1,7 +1,7 @@
 #include "header_file.h"
 
 bool view_balance(int cd){
-/* 	char cust_id[100];
+ 	char cust_id[100];
 
         const char* prompt1="-----View Account Balance-----\nCustomer ID:";
         if(( write(cd,prompt1,strlen(prompt1)))==-1){
@@ -56,6 +56,7 @@ bool view_balance(int cd){
                 temp.active = (active_int != 0); 
                // printf("Read Employee: ID=%s, Name=%s, Password=%s, Is Employed=%d\n", temp.id, temp.name, temp.pass, temp.is_empl);
 
+		if(strcmp(temp.id,cust_id)==0){
 
                 lock.l_start = current_position - strlen(line) - 1;  
                 lock.l_len = strlen(line) + 1; 
@@ -65,15 +66,17 @@ bool view_balance(int cd){
                         close(db_fd);
                         return false;
                 }
-
+		
+		write(cd,"Balance:",strlen("Balance:"));
 		write(cd,temp.balance,sizeof(temp.balance));
+
                 lock.l_type = F_UNLCK;
                 if (fcntl(db_fd, F_SETLKW, &lock) == -1) {
                         perror("Error in releasing the lock");
                         close(db_fd);
                         return false;
                 }
-
+		printf("view balance\n");
                 return true;
                 break;
 
@@ -81,7 +84,7 @@ bool view_balance(int cd){
         }}
         write(cd,"Failure",strlen("Failure"));
         return false;
-*/
+
 return true;
 }
 

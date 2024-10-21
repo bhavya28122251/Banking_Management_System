@@ -336,3 +336,137 @@ bool modify_customer(int cd){
         return true;
 	
 }
+
+bool activate_deactivate_cust(int cd){
+
+	struct Customer data_new;
+        char custid[10];
+        char format[300];
+        char enter_id[] = "-----Activate/Deactivate Customer Account-----\nEnter ID of the Customer whose accounts needs to activated or deactivted:";
+
+        write(cd, enter_id, sizeof(enter_id));
+        ssize_t bytes_id = read(cd, custid, sizeof(custid));
+        if (bytes_id == -1) {
+                perror("Error in receiving Customer ID");
+                return false;
+        }
+        custid[bytes_id] = '\0';  
+        printf("Received Customer ID: %s\n", custid);
+
+        int db_fd = open("customer_db.txt", O_RDWR);
+        if (db_fd == -1) {
+                perror("Error in opening the database file");
+                return false;
+        }
+
+        char line[300];
+        struct Customer temp;
+        bool is_there = false;
+
+        struct flock lock;
+        memset(&lock, 0, sizeof(lock));
+        lock.l_type = F_WRLCK;  
+        lock.l_whence = SEEK_SET;  
+
+        off_t current_position = 0;
+
+         char buffer;
+        int line_index = 0;
+
+        while (read(db_fd, &buffer, 1) > 0) {
+        if (buffer != '\n') {
+            line[line_index++] = buffer;
+        }
+         else {
+                line[line_index] = '\0';
+                line_index = 0;
+
+                current_position = lseek(db_fd, 0, SEEK_CUR);
+
+                int active_int;
+                sscanf(line, "%[^,],%[^,],%[^,],%[^,],%d", temp.id, temp.name, temp.pass, temp.balance,&active_int);
+                temp.active = (active_int != 0); 
+
+                if (strcmp(temp.id, custid) == 0) {
+                        printf("Customer ID matched.\n");
+
+                lock.l_start = current_position - strlen(line) - 1;  
+                lock.l_len = strlen(line); 
+
+                if (fcntl(db_fd, F_SETLKW, &lock) == -1) {
+                         perror("Error in obtaining lock");
+                        close(db_fd);
+                        return false;
+                }
+
+		char ch[2];
+		if(temp.active==1){
+			write(cd,"Customer Account is Active. Do you want to Deactivate the Account?\nPress y or n:",strlen("Customer Account is Active. Do you want to Deactivate the Account?\nPress y or n:")); 
+        		ssize_t bytes_ch = read(cd, ch, sizeof(ch));
+        		if (bytes_ch == -1) {
+                		perror("Error in receiving");
+                		return false;
+        		}
+        		ch[bytes_ch] = '\0';
+			if(strcmp(ch,"y")==0){
+				data_new.active=0;
+				write(cd,"Customer Account Deactivated",strlen("Customer Account Deactivated"));  
+			}
+			else{
+				write(cd,"No Change",strlen("No Change"));
+				data_new.active=1;
+			}
+		}
+		
+		else{
+                        write(cd,"Customer Account is Deactive. Do you want to Activate the Account?\nPress y or n:",strlen("Customer Account is Deactive. Do you want to Activate the Account\nPress y or n"));
+                        ssize_t bytes_ch = read(cd, ch, sizeof(ch));
+                        if (bytes_ch == -1) {
+                                perror("Error in receiving");
+                                return false;
+                        }
+                        ch[bytes_ch] = '\0';
+                        if(strcmp(ch,"y")==0){
+                                data_new.active=1;
+                                write(cd,"Customer Account Activated",strlen("Customer Account Activated"));  
+                        }
+                        else{
+                                write(cd,"No Change",strlen("No Change"));
+                                data_new.active=0;
+                        }
+                }
+
+
+
+                snprintf(format, sizeof(format), "%s,%s,%s,%s,%d\n", temp.id, temp.name, temp.pass,temp.balance,data_new.active);
+
+                lseek(db_fd, current_position - strlen(line) - 1, SEEK_SET);
+
+                if (write(db_fd, format, strlen(format)) == -1) {
+                        write(cd, "Error in Updating Data", strlen("Error in Updating Data"));
+                        close(db_fd);
+                        return false;
+                }
+
+                lock.l_type = F_UNLCK;
+                if (fcntl(db_fd, F_SETLK, &lock) == -1) {
+                        perror("Error in releasing the lock");
+                        close(db_fd);
+                        return false;
+                }
+
+                is_there = true;
+                break;
+            }
+        }
+    }
+
+        close(db_fd);
+
+        if (!is_there) {
+                write(cd, "Employee Not Found", strlen("Employee Not Found"));
+                return false;
+        }
+
+	return true;
+}

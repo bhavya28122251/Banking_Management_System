@@ -234,7 +234,7 @@ bool manager_options(int cd){
                 switch(ch){
                         case 1:
                                 if(activate_deactivate_cust(cd)){
-                                        write(cd,"Customer Account Activated/Deactivated Successfully\n",strlen("Customer Account Activated/Deactivated Successfully\n"));
+                                       // write(cd,"Customer Account Activated/Deactivated Successfully\n",strlen("Customer Account Activated/Deactivated Successfully\n"));
                                 }
                                 break;
                         case 2:
