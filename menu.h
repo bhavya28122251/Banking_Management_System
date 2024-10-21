@@ -150,7 +150,7 @@ bool customer_options(int cd){
                 int ch=atoi(ch_str);
                 switch(ch){
                         case 1:
-                                if(view_balace(cd)){
+                                if(view_balance(cd)){
                                         write(cd,"Account Balance Displayed Successfully\n",strlen("Account Balance Displayed Successfully\n"));
                                 }
                                 break;
@@ -233,8 +233,8 @@ bool manager_options(int cd){
                 int ch=atoi(ch_str);
                 switch(ch){
                         case 1:
-                                if(1){
-                                        write(cd,"Customer Accounts Activated/Deactivated Successfully\n",strlen("Customer Accounts Activated/Deactivated Successfully\n"));
+                                if(activate_deactivate_cust(cd)){
+                                        write(cd,"Customer Account Activated/Deactivated Successfully\n",strlen("Customer Account Activated/Deactivated Successfully\n"));
                                 }
                                 break;
                         case 2:

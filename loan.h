@@ -154,11 +154,11 @@ bool view_assigned_loan_appl(int cd){
         write(cd, enter_id, sizeof(enter_id));
         ssize_t bytes_id = read(cd, emplid, sizeof(emplid));
         if (bytes_id == -1) {
-                perror("Error in receiving Customer ID");
+                perror("Error in receiving Employee ID");
                 return false;
         }
         emplid[bytes_id] = '\0';  
-        printf("Received Customer ID: %s\n", emplid);
+        printf("Received Employee ID: %s\n", emplid);
 
         int db_fd = open("loan_db.txt", O_RDWR);
         if (db_fd == -1) {
@@ -168,7 +168,8 @@ bool view_assigned_loan_appl(int cd){
 	 char buffer;
         int line_index = 0;
 	char transaction_buffer[500];
-char line[300];
+
+	char line[300];
         struct Loan temp;
         bool is_there = false;
 	off_t current_position = 0;
@@ -186,7 +187,7 @@ char line[300];
                 current_position = lseek(db_fd, 0, SEEK_CUR);
 
                 sscanf(line, "%[^,],%d,%[^,]", temp.cust_id,&temp.status, temp.empl_id);
-               // printf("Read Customer: ID=%s, Name=%s, Password=%s, Is Employed=%d\n", temp.id, temp.name, temp.pass, temp.is_empl);
+                printf("Read Customer: ID=%s, Status %d, Employee=%s\n", temp.cust_id,&temp.status, temp.empl_id);
 
                 if (strcmp(temp.empl_id, emplid) == 0) {
                         printf("Employee ID matched.\n");
@@ -228,17 +229,18 @@ bool approve_reject_loan(int cd){
         }	
 	
         custid[bytes_id] = '\0';  
-        printf("Received Customer ID: %s\n", custid);
+        printf("*Received Customer ID: %s\n", custid);
 
-	char ch;
-        char ch_prompt="Press 1 to Approve and 0 to Reject:";
+	/*char ch[2];
+        char ch_prompt[]="Press 1 to Approve and 0 to Reject:";
 	 write(cd, ch_prompt, sizeof(ch_prompt));
         ssize_t bytes_ch = read(cd, ch, sizeof(ch));
         if (bytes_ch == -1) {
                 perror("Error");
                 return false;
         }
-       // ch[bytes_ch] = '\0';  
+        ch[bytes_ch] = '\0'; 
+	printf("Approved"); */
 
         int db_fd = open("loan_db.txt", O_RDWR);
         if (db_fd == -1) {
@@ -285,18 +287,28 @@ bool approve_reject_loan(int cd){
                         close(db_fd);
                         return false;
                 }
-		
-		if(ch=='1'){
+		char ch[2];
+        	char ch_prompt[]="Press 1 to Approve and 0 to Reject:";
+         	write(cd, ch_prompt, sizeof(ch_prompt));
+        	ssize_t bytes_ch = read(cd, ch, sizeof(ch));
+       		if (bytes_ch == -1) {
+                	perror("Error");
+                	return false;
+        	}
+        	ch[bytes_ch] = '\0';  
+       		printf("Approved"); 
+
+		if((strcmp(ch,"1"))==0){
 			data_new.status=2;
 			write(cd,"Loan Approved\n",strlen("Loan Approved\n"));
 		}
 		else{
-			
+			data_new.status=1;			
                         write(cd,"Loan Rejected\n",strlen("Loan Rejected\n"));
                 }
 	
 
-                snprintf(format, sizeof(format), "%s,%d,%s\n", temp.cust_id, data_new.status, temp.empl_id);
+		snprintf(format, sizeof(format), "%s,%d,%s\n", temp.cust_id, data_new.status, temp.empl_id);
 
                 lseek(db_fd, current_position - strlen(line) - 1, SEEK_SET);
 

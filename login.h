@@ -531,7 +531,7 @@ bool change_customer_pass(int cd){
                         data_new.pass[data_read]='\0';
 
 
-                snprintf(format, sizeof(format), "%s,%s,%s,%s,%d\n", temp.id, temp.name, data_new.pass, temp.balance,temp.acitve);
+                snprintf(format, sizeof(format), "%s,%s,%s,%s,%d\n", temp.id, temp.name, data_new.pass, temp.balance,temp.active);
 
                 lseek(db_fd, current_position - strlen(line) - 1, SEEK_SET);
 

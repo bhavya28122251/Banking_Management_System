@@ -51,7 +51,7 @@ bool transfer_funds(int cd);
 bool add_feedback(int cd);
 bool review_feedback(int cd);
 bool view_transaction_history(int cd);
-//bool activate_deactivate_customer(int cd);
+bool activate_deactivate_cust(int cd);
 
 //int my_strcmp(const char *s1, const char *s2);
 struct Employee{

@@ -1,7 +1,7 @@
 #include "header_file.h"
 
 bool view_balance(int cd){
- 	char cust_id[100];
+/* 	char cust_id[100];
 
         const char* prompt1="-----View Account Balance-----\nCustomer ID:";
         if(( write(cd,prompt1,strlen(prompt1)))==-1){
@@ -81,10 +81,13 @@ bool view_balance(int cd){
         }}
         write(cd,"Failure",strlen("Failure"));
         return false;
-
+*/
+return true;
 }
 
+
 bool deposit_money(int cd){
+/*
 	
 	struct Transaction add;
 	write(cd,"Enter sender ID\n",strlen("Enter sender ID\n"));
@@ -217,12 +220,13 @@ bool deposit_money(int cd){
                 write(cd, "Failure", strlen("Failure"));
                 return false;
         }
-
+*/
         return true;
 
 }
 
 bool withdraw_money(int cd){
+/*
 	struct transaction add;
 	write(cd,"Enter Sender ID\n",strlen("Enter sender ID\n"));
 	int read1=read(cd,add.sender_id,sizeof(add.sender_id));
@@ -352,14 +356,15 @@ bool withdraw_money(int cd){
                 write(cd, "Employee Not Found", strlen("Employee Not Found"));
                 return false;
         }
-
+*/
         return true;
 
 }
 
+
 bool transfer_funds(int cd)
 {
-	struct Transaction add;
+/*	struct Transaction add;
 	write(cd,"Enter sender id\n",strlen("Enter sender id\n"));
 	int read1=read(cd,add.sender_id,sizeof(add.sender_id));
 	add.sender_id[read1 -1]='\0';
@@ -583,15 +588,15 @@ bool transfer_funds(int cd)
                 write(cd, "Failure", strlen("Failure"));
                 return false;
         }
-
+*/
         return true;
 
 
 }
 
 
-bool view_transanction_history(int cd){
-	 struct Transaction data_new;
+bool view_transaction_history(int cd){
+/*	 struct Transaction data_new;
         char emplid[10];
         char format[300];
         char enter_id[] = "-----View Transaction History-----\nEnter Your ID:";
@@ -655,6 +660,6 @@ bool view_transanction_history(int cd){
 	    else
 		write(cd,"No Loan Applications Assigned\n",strlen("No Loan Applications Assigned\n"));
 		return false;
-	
-//return true;
+*/	
+return true;
 }
