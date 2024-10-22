@@ -84,7 +84,7 @@ struct Loan{
 };
 
 struct Feedback{
-	char cust_id[10];
+	char id[10];
 	char feedback[1000];
 };
 

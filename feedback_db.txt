@@ -1,0 +1,4 @@
+C1004,Good
+C1005,Slow
+C1007,Systematic
+C1008,Fine
