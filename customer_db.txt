@@ -1,4 +1,4 @@
 C1214,Ramma,ram,10000,1
 E1010,Ganshyamshah,shy,1000,0
-C1004,Bhav,bhav,2000,1
-C1003,Dhwani,dhwan,3000,0
+C1004,Bhav,bhav,9000,1
+C1003,Dhwani,dhwan,1900,0

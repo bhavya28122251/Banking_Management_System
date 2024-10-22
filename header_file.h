@@ -13,6 +13,7 @@
 #include<arpa/inet.h>
 #include<stdbool.h>
 #include<sys/file.h>
+#define PORT 5055
 
 
 bool admin_login(int cd);
@@ -72,8 +73,8 @@ struct Customer{
 struct Transaction{
 	char sender_id[10];
 	char rec_id[10];
-	char sent[10];
-	char flag;
+	char sent[20];
+	char flag[2];
 };
 
 struct Loan{
@@ -88,5 +89,4 @@ struct Feedback{
 };
 
 
-#define PORT 5055
 #endif
