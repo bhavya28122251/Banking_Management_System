@@ -1,3 +1,4 @@
-E1011,Kavyaa,Bha,1
+E1011,Kavyaa,bha,1
 E1015,Khushushah,Satak,0
 E1001,Kanya,tan,1
+E1022,Tanvi,tanu,1
